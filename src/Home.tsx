@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import type { Post } from "../types";
 
-const AllPosts: React.FC = () => {
+const Home: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
@@ -39,6 +39,14 @@ const AllPosts: React.FC = () => {
             <p className="mt-3 text-lg line-clamp-3">
               {post.content.substring(0, 280)}...
             </p>
+            <div className="flex items-center gap-2 mt-2">
+              <img
+                src={post.author.avatar}
+                alt="avatar"
+                className="w-6 h-6 rounded-full"
+              />
+              <span className="text-sm text-gray-600">{post.author.name}</span>
+            </div>
             <Link
               to={`/post/${post._id}`}
               className="inline-block mt-4 text-blue-600 hover:underline"
@@ -52,4 +60,4 @@ const AllPosts: React.FC = () => {
   );
 };
 
-export default AllPosts;
+export default Home;
