@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import type { Post } from "../types";
+import { SignedIn } from "@clerk/clerk-react";
 
 const Home: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -17,12 +18,14 @@ const Home: React.FC = () => {
     <div className="max-w-4xl mx-auto p-6">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-4xl font-bold">Блог</h1>
-        <Link
-          to="/post/create"
-          className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
-        >
-          + Написати пост
-        </Link>
+        <SignedIn>
+          <Link
+            to="/post/create"
+            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
+          >
+            + Написати пост
+          </Link>
+        </SignedIn>
       </div>
 
       <div className="space-y-8">

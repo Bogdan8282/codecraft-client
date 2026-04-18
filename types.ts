@@ -7,4 +7,7 @@ export interface Post {
     name: string;
     avatar: string;
   };
+  authorId: string;
+  likes: string[];
+  dislikes: string[];
 }

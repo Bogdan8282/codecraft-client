@@ -1,7 +1,77 @@
-const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
+import React, { useState } from "react";
+import axios from "axios";
+import type { Post } from "../types";
+import { useAuth } from "@clerk/clerk-react";
 
-export default Dashboard
+const Dashboard: React.FC = () => {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const { getToken } = useAuth();
+
+  const fetchPosts = async () => {
+    try {
+      const token = await getToken();
+      const res = await axios.get("http://localhost:5000/api/posts/dashboard", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setPosts(res.data);
+    } catch (err) {
+      console.error("Помилка завантаження постів:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading && posts.length === 0) {
+    fetchPosts();
+  }
+
+  const handleDelete = async (id: string) => {
+    if (window.confirm("Ви впевнені, що хочете видалити цей пост?")) {
+      try {
+        const token = await getToken();
+        await axios.delete(`http://localhost:5000/api/posts/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setPosts((prevPosts) => prevPosts.filter((p) => p._id !== id));
+      } catch (err) {
+        alert("Помилка при видаленні");
+        console.log(err);
+      }
+    }
+  };
+
+  if (loading) {
+    return <div className="max-w-2xl mx-auto p-6">Завантаження...</div>;
+  }
+
+  return (
+    <div className="max-w-2xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6">Мої пости</h1>
+      {posts.length === 0 ? (
+        <p>У вас ще немає постів.</p>
+      ) : (
+        posts.map((post) => (
+          <div
+            key={post._id}
+            className="border p-4 mb-4 rounded flex justify-between items-center"
+          >
+            <h2>{post.title}</h2>
+            <button
+              onClick={() => handleDelete(post._id)}
+              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            >
+              Видалити
+            </button>
+          </div>
+        ))
+      )}
+    </div>
+  );
+};
+
+export default Dashboard;

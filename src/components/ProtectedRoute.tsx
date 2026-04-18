@@ -8,7 +8,7 @@ export function ProtectedRoute({ children }:{ children:React.ReactNode }) {
   if (!isLoaded) return <div>Loading...</div>;
 
   if (!isSignedIn) {
-    return <Navigate to="/sign-in" />;
+    return <Navigate to="/" />;
   }
 
   return children;
