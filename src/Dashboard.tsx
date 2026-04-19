@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import type { Post } from "../types";
 import { useAuth } from "@clerk/clerk-react";
+import { Link } from "react-router-dom";
 
 const Dashboard: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -60,7 +61,9 @@ const Dashboard: React.FC = () => {
             key={post._id}
             className="border p-4 mb-4 rounded flex justify-between items-center"
           >
+            <Link to={`/post/${post._id}`}>
             <h2>{post.title}</h2>
+            </Link>
             <button
               onClick={() => handleDelete(post._id)}
               className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
