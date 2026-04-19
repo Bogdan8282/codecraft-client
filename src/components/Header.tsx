@@ -36,7 +36,7 @@ export default function Header() {
   return (
     <header className="border-b bg-white">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <div className="font-bold text-xl">Мій Додаток</div>
+        <div className="font-bold text-xl">CodeCraft</div>
 
         <div className="flex items-center gap-4">
           <SignedOut>
@@ -92,7 +92,7 @@ export default function Header() {
                       }}
                       className="w-full text-left px-4 py-3 hover:bg-gray-100 flex items-center gap-3 text-sm"
                     >
-                      ⚙️ Управління акаунтом
+                      Управління акаунтом
                     </button>
 
                     <button

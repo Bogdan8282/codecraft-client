@@ -11,3 +11,14 @@ export interface Post {
   likes: string[];
   dislikes: string[];
 }
+
+export interface Comment {
+  _id: string;
+  content: string;
+  createdAt: string;
+  authorId: string;
+  author: {
+    name: string;
+    avatar: string;
+  };
+}
